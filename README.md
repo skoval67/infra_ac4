@@ -1,6 +1,7 @@
 # infra_ac4
 
 Создаем ключи для доступа к бакету
+```
 yc iam access-key create --service-account-name infraterraform
 access_key:
   id: aje...
@@ -8,8 +9,10 @@ access_key:
   created_at: "2024-05-21T10:00:30.227819147Z"
   key_id: YCA...
 secret: YCM...
-
+```
 Инициализируем terraform
+```
 $ export ACCESS_KEY="YCAJEsjYOGZzgzqLCo84jqXJX"
 $ export SECRET_KEY="YCMALS2M929k4AYPYUb67VneYpv2miXB-ZtJYyDh"
 $ terraform init -backend-config="access_key=$ACCESS_KEY" -backend-config="secret_key=$SECRET_KEY"
+```
