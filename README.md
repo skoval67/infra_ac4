@@ -12,7 +12,7 @@ secret: YCM...
 ```
 Инициализируем terraform
 ```
-$ export ACCESS_KEY="YCAJEsjYOGZzgzqLCo84jqXJX"
-$ export SECRET_KEY="YCMALS2M929k4AYPYUb67VneYpv2miXB-ZtJYyDh"
+$ export ACCESS_KEY="YCA..."
+$ export SECRET_KEY="YCM..."
 $ terraform init -backend-config="access_key=$ACCESS_KEY" -backend-config="secret_key=$SECRET_KEY"
 ```
