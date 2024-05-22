@@ -26,5 +26,5 @@ terraform {
 
 provider "yandex" {
   zone      = "ru-central1-a"
-  folder_id = var.folder_id
+  folder_id = "b1g9cj9hkc9nb77qmv8f"
 }
