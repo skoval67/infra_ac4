@@ -1,0 +1,5 @@
+---
+# vars file for setup-db
+work_dir: /opt
+config_files:
+  - { src: docker-compose.yaml.j2, dest: "{{ work_dir }}/docker-compose.yaml" }

@@ -10,6 +10,7 @@ resource "yandex_compute_instance" "vm" {
   for_each    = var.vm_options
   platform_id = "standard-v3"
   name = lookup(each.value, "name")
+  hostname = lookup(each.value, "name")
 
   resources {
     memory        = lookup(each.value, "memory", 2)
@@ -37,6 +38,10 @@ resource "yandex_compute_instance" "vm" {
 
   metadata = {
     ssh-keys = "ubuntu:${file("~/.ssh/id_ed25519.pub")}"
+  }
+
+  labels = {
+    group = lookup(each.value, "group", "app")
   }
 
   zone = lookup(each.value, "zone")

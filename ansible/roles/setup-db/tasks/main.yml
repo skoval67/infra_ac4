@@ -1,0 +1,28 @@
+---
+# tasks file for setup-db
+- name: Create main directory
+  ansible.builtin.file:
+    path: "{{ work_dir }}/app"
+    state: directory
+    mode: '0755'
+
+- name: Copy config files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    "{{ config_files }}"
+
+- name: Copy other files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ work_dir }}/app"
+    owner: root
+    group: root
+    mode: '0755'
+  with_fileglob: ['*']
+
+- name: Register compose file directory
+  community.docker.docker_compose_v2:
+    project_src: "{{ work_dir }}"
+    state: present

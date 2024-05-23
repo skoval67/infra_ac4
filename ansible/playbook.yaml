@@ -1,0 +1,33 @@
+---
+- name: Check all systems are ready
+  hosts: all
+  gather_facts: false
+  become: false
+  tasks:
+    - name: Wait for system to become reachable
+      ansible.builtin.wait_for_connection:
+
+- name: Prepare hosts
+  hosts: all
+  roles:
+    - osupgrade
+    - docker
+
+- name: Setup app at Zone 3
+  gather_facts: false
+  hosts: db
+  roles:
+    - setup-db
+
+- name: Setup app at Zone 2
+  gather_facts: false
+  hosts: app
+  roles:
+    - setup-app
+  tags: [app]
+
+- name: Setup load balancer at DMZ
+  gather_facts: false
+  hosts: dmz
+  roles:
+    - traefik

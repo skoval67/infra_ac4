@@ -1,2 +1,4 @@
 .terraform*
 .env
+venv
+.oauth.token

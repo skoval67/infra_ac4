@@ -1,0 +1,11 @@
+services:
+  traefik:
+    image: traefik
+    restart: unless-stopped
+    ports:
+      - '80:80'
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entryPoints.http.address=:80

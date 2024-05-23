@@ -1,0 +1,9 @@
+---
+# vars file for setup-app
+work_dir: /opt/app
+config_files:
+  - { src: docker-compose.yaml.j2, dest: "{{ work_dir }}/docker-compose.yaml" }
+  - { src: default.conf.j2, dest: "{{ work_dir }}/default.conf" }
+upstreams:
+  app1host: db1
+  app2host: db2

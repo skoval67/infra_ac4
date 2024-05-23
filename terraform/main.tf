@@ -30,6 +30,7 @@ resource "yandex_vpc_subnet" "subnet-app1" {
   zone           = "ru-central1-a"
   network_id     = yandex_vpc_network.network1.id
   v4_cidr_blocks = ["192.168.1.0/24"]
+  route_table_id = yandex_vpc_route_table.rt.id
 }
 
 resource "yandex_vpc_subnet" "subnet-app2" {
@@ -37,6 +38,7 @@ resource "yandex_vpc_subnet" "subnet-app2" {
   zone           = "ru-central1-b"
   network_id     = yandex_vpc_network.network1.id
   v4_cidr_blocks = ["192.168.2.0/24"]
+  route_table_id = yandex_vpc_route_table.rt.id
 }
 
 resource "yandex_vpc_subnet" "subnet-db1" {
@@ -44,6 +46,7 @@ resource "yandex_vpc_subnet" "subnet-db1" {
   zone           = "ru-central1-a"
   network_id     = yandex_vpc_network.network1.id
   v4_cidr_blocks = ["192.168.128.0/24"]
+  route_table_id = yandex_vpc_route_table.rt.id
 }
 
 resource "yandex_vpc_subnet" "subnet-db2" {
@@ -51,6 +54,7 @@ resource "yandex_vpc_subnet" "subnet-db2" {
   zone           = "ru-central1-b"
   network_id     = yandex_vpc_network.network1.id
   v4_cidr_blocks = ["192.168.129.0/24"]
+  route_table_id = yandex_vpc_route_table.rt.id
 }
 
 resource "yandex_vpc_security_group" "dmz-sg" {
@@ -207,7 +211,8 @@ module "lb_dmz" {
       subnet_id          = yandex_vpc_subnet.subnet-dmz.id
       nat                = true
       security_group_ids = [yandex_vpc_security_group.dmz-sg.id]
-      zone = "ru-central1-a"
+      group              = "dmz"
+      zone               = "ru-central1-a"
     }
   }
 }
@@ -220,7 +225,8 @@ module "app1" {
       name               = "app1host"
       subnet_id          = yandex_vpc_subnet.subnet-app1.id
       security_group_ids = [yandex_vpc_security_group.zone2-app1-sg.id]
-      zone = "ru-central1-a"
+      group              = "app"
+      zone               = "ru-central1-a"
     }
   }
 }
@@ -233,7 +239,8 @@ module "app2" {
       name               = "app2host"
       subnet_id          = yandex_vpc_subnet.subnet-app2.id
       security_group_ids = [yandex_vpc_security_group.zone2-app2-sg.id]
-      zone = "ru-central1-b"
+      group              = "app"
+      zone               = "ru-central1-b"
     }
   }
 }
@@ -243,10 +250,11 @@ module "db1" {
 
   vm_options = {
     one = {
-      name               = "db1host"
+      name               = "db1"
       subnet_id          = yandex_vpc_subnet.subnet-db1.id
       security_group_ids = [yandex_vpc_security_group.zone3-db1-sg.id]
-      zone = "ru-central1-a"
+      group              = "db"
+      zone               = "ru-central1-a"
     }
   }
 }
@@ -256,10 +264,11 @@ module "db2" {
 
   vm_options = {
     one = {
-      name               = "db2host"
+      name               = "db2"
       subnet_id          = yandex_vpc_subnet.subnet-db2.id
       security_group_ids = [yandex_vpc_security_group.zone3-db2-sg.id]
-      zone = "ru-central1-b"
+      group              = "db"
+      zone               = "ru-central1-b"
     }
   }
 }
