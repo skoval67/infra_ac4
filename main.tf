@@ -159,7 +159,7 @@ resource "yandex_vpc_security_group" "zone3-db1-sg" {
   ingress {
     protocol          = "TCP"
     description       = "ssh"
-    security_group_id = yandex_vpc_security_group.zone2-app1-sg.id
+    security_group_id = yandex_vpc_security_group.dmz-sg.id
     port              = 22
   }
 
@@ -186,7 +186,7 @@ resource "yandex_vpc_security_group" "zone3-db2-sg" {
   ingress {
     protocol          = "TCP"
     description       = "ssh"
-    security_group_id = yandex_vpc_security_group.zone2-app2-sg.id
+    security_group_id = yandex_vpc_security_group.dmz-sg.id
     port              = 22
   }
 
@@ -207,6 +207,7 @@ module "lb_dmz" {
       subnet_id          = yandex_vpc_subnet.subnet-dmz.id
       nat                = true
       security_group_ids = [yandex_vpc_security_group.dmz-sg.id]
+      zone = "ru-central1-a"
     }
   }
 }
@@ -219,18 +220,46 @@ module "app1" {
       name               = "app1host"
       subnet_id          = yandex_vpc_subnet.subnet-app1.id
       security_group_ids = [yandex_vpc_security_group.zone2-app1-sg.id]
+      zone = "ru-central1-a"
     }
   }
 }
 
-# module "app2" {
-#   source = "./modules/vm"
+module "app2" {
+  source = "./modules/vm"
 
-#   vm_options = {
-#     one = {
-#       name               = "app2host"
-#       subnet_id          = yandex_vpc_subnet.subnet-app2.id
-#       security_group_ids = [yandex_vpc_security_group.zone2-app2-sg.id]
-#     }
-#   }
-# }
+  vm_options = {
+    one = {
+      name               = "app2host"
+      subnet_id          = yandex_vpc_subnet.subnet-app2.id
+      security_group_ids = [yandex_vpc_security_group.zone2-app2-sg.id]
+      zone = "ru-central1-b"
+    }
+  }
+}
+
+module "db1" {
+  source = "./modules/vm"
+
+  vm_options = {
+    one = {
+      name               = "db1host"
+      subnet_id          = yandex_vpc_subnet.subnet-db1.id
+      security_group_ids = [yandex_vpc_security_group.zone3-db1-sg.id]
+      zone = "ru-central1-a"
+    }
+  }
+}
+
+module "db2" {
+  source = "./modules/vm"
+
+  vm_options = {
+    one = {
+      name               = "db2host"
+      subnet_id          = yandex_vpc_subnet.subnet-db2.id
+      security_group_ids = [yandex_vpc_security_group.zone3-db2-sg.id]
+      zone = "ru-central1-b"
+    }
+  }
+}
