@@ -1,2 +1,19 @@
 ---
 # tasks file for traefik
+- name: Create main directory
+  ansible.builtin.file:
+    path: "{{ work_dir }}/config"
+    state: directory
+    mode: '0755'
+
+- name: Copy config files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    "{{ config_files }}"
+
+- name: Register compose file directory
+  community.docker.docker_compose_v2:
+    project_src: "{{ work_dir }}"
+    state: present

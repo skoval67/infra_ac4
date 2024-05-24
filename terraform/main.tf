@@ -107,7 +107,7 @@ resource "yandex_vpc_security_group" "zone2-app1-sg" {
   ingress {
     protocol       = "TCP"
     description    = "Zone 2"
-    v4_cidr_blocks = ["192.168.128.0/25"]
+    v4_cidr_blocks = ["192.168.0.0/23"]
     from_port      = 1
     to_port        = 65535
   }
@@ -142,7 +142,7 @@ resource "yandex_vpc_security_group" "zone2-app2-sg" {
   ingress {
     protocol       = "TCP"
     description    = "Zone 2"
-    v4_cidr_blocks = ["192.168.128.0/25"]
+    v4_cidr_blocks = ["192.168.0.0/23"]
     from_port      = 1
     to_port        = 65535
   }

@@ -24,7 +24,6 @@
   hosts: app
   roles:
     - setup-app
-  tags: [app]
 
 - name: Setup load balancer at DMZ
   gather_facts: false

@@ -1,2 +1,6 @@
 ---
 # vars file for traefik
+work_dir: /opt/traefic
+config_files:
+  - { src: docker-compose.yaml.j2, dest: "{{ work_dir }}/docker-compose.yaml" }
+  - { src: config.yaml.j2, dest: "{{ work_dir }}/config/config.yaml" }

@@ -1,0 +1,15 @@
+# http routing section
+http:
+  routers:
+    # Define a connection between requests and services
+    to-whoami:
+      rule: "Host(`tripleap.ru`) && PathPrefix(`/`)"
+      service: app
+
+  services:
+    # Define how to reach an existing service on our infrastructure
+    app:
+      loadBalancer:
+        servers:
+        - url: http://app1host/
+        - url: http://app2host/

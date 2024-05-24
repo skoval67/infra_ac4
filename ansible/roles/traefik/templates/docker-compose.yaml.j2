@@ -4,8 +4,11 @@ services:
     restart: unless-stopped
     ports:
       - '80:80'
+      - '8080:8080'
+    volumes:
+      - ./config:/etc/traefik
     command:
+      - --api.dashboard=true
       - --api.insecure=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entryPoints.http.address=:80
+      - --entryPoints.web.address=:80
+      - --providers.file.directory=/etc/traefik
