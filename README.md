@@ -1,5 +1,5 @@
 # infra_ac4
-
+## учебный проект на основе стандарта NIST (SP 800-53, пункт AC-4)
 Создаем ключи для доступа к бакету
 ```
 yc iam access-key create --service-account-name infraterraform
@@ -15,4 +15,8 @@ secret: YCM...
 $ export ACCESS_KEY="YCA..."
 $ export SECRET_KEY="YCM..."
 $ terraform init -backend-config="access_key=$ACCESS_KEY" -backend-config="secret_key=$SECRET_KEY"
+```
+Разворачиваем проект
+```
+make
 ```

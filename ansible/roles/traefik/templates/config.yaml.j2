@@ -2,7 +2,7 @@
 http:
   routers:
     # Define a connection between requests and services
-    to-whoami:
+    router1:
       rule: "Host(`tripleap.ru`) && PathPrefix(`/`)"
       service: app
 
